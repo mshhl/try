@@ -4,13 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>try</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
     <link rel="stylesheet" href="/style.css">
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+    crossorigin=""></script>
 </head>
 <body>
     <div class="card">
         <div class="search">
             <input type="text" placeholder="Enter your city name" spellcheck="false">
-            <button><img src="/images/search.png"></button>
+            <button class="search-btn"><img src="/images/search.png"></button>
         </div>
         <div class="error">Invalid city name</div>
         <div class="weather">
@@ -38,8 +44,212 @@
 
         </div>
     </div>
+    <br><br>
+    <div id="map"></div>
+    <button class="historybtn">SEE SEARCH  HISTORY</button>
+       
+    </div>
+    <button class="mylocationbtn">GET MY WEATHER</button>
     <script>
-        const api_key = 
+        const searchButton = document.querySelector(".search-btn");
+        const locationBtn = document.querySelector(".mylocationbtn");
+        const api_key = "8c7ab22aabf67ccdd10697ca28f4d376";
+        const api_url = `https://api.openweathermap.org/data/2.5/weather?`;
+        const weather_icon = document.querySelector(".weather-icon")
+        const temp = document.querySelector(".temp");
+        const cityname = document.querySelector(".cityname");
+        const humidity = document.querySelector(".humidity .measure");
+        const wind = document.querySelector(".wind .measure");
+        const weather = document.querySelector(".weather");
+        
+
+        //  map implementation
+      const googleApiKey = "AIzaSyCUtMOEK4hOgvcqa-tthbowatJ0v3v2Dts";
+      const googleApi = "https://maps.googleapis.com/maps/api/js?key=AIzaSyCUtMOEK4hOgvcqa-tthbowatJ0v3v2Dts&callback=initMap"
+      
+
+
+
+    //  implementing map 
+    var map = L.map('map');
+        map.setView([10.850516, 76.271080], 13);
+
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map);
+   
+     map.on("click", async function(e){
+      const {lat,lng} = e.latlng;
+      const result = await fetch(api_url+`lat=${lat}&lon=${lng}&appid=${api_key}`)
+                if(result.status == 404){
+                    console.log("fetching failed!")
+                    document.querySelector(".error").style.display = "block"
+                    weather.style.display = "none";
+                }else{
+                    const data = await result.json();
+                document.querySelector(".error").style.display = "none";
+        
+                temp.innerHTML = Math.round(data.main.temp - 273.15) + "°C"
+             cityname.innerHTML = data.name;
+             humidity.innerHTML = data.main.humidity + "%";
+             wind.innerHTML = data.wind.speed + " Km/h";
+
+             if(data.weather[0].main == "Clouds"){
+        weather_icon.src = "/images/clouds.png"
+            }else if(data.weather[0].main == "Clear"){
+        weather_icon.src = "/images/clear.png";
+            }else if(data.weather[0].main == "Drizzle"){
+        weather_icon.src = "/images/drizzle.png";
+            }else if(data.weather[0].main == "Snow"){
+          weather_icon.src = "/images/snow.png";
+            }
+       else if(data.weather[0].main == "Mist"){
+        weather_icon.src = "/images/mist.png";
+            }
+            else if(data.weather[0].main == "Rain"){
+        weather_icon.src = "/images/rain.png";
+            }
+
+     
+      
+      
+    
+            weather.style.display = "block";
+
+       
+                
+                   }
+                
+                
+
+    
+        
+  })
+
+
+        // implement the geolocation feature
+        
+        locationBtn.addEventListener("click",async () =>{
+            const successCallback = position =>{
+                console.log(position)
+              const lat = position.coords.latitude;
+              const lon = position.coords.longitude
+              
+              const ft = async () =>{
+                const result = await fetch(api_url+`lat=${lat}&lon=${lon}&appid=${api_key}`)
+                if(result.status == 404){
+                    console.log("fetching failed!")
+                }else{
+                    const data = await result.json();
+                document.querySelector(".error").style.display = "none";
+        
+                temp.innerHTML = Math.round(data.main.temp - 273.15) + "°C"
+             cityname.innerHTML = data.name;
+             humidity.innerHTML = data.main.humidity + "%";
+             wind.innerHTML = data.wind.speed + " Km/h";
+
+             if(data.weather[0].main == "Clouds"){
+        weather_icon.src = "/images/clouds.png"
+            }else if(data.weather[0].main == "Clear"){
+        weather_icon.src = "/images/clear.png";
+            }else if(data.weather[0].main == "Drizzle"){
+        weather_icon.src = "/images/drizzle.png";
+            }else if(data.weather[0].main == "Snow"){
+          weather_icon.src = "/images/snow.png";
+            }
+       else if(data.weather[0].main == "Mist"){
+        weather_icon.src = "/images/mist.png";
+            }
+            else if(data.weather[0].main == "Rain"){
+        weather_icon.src = "/images/rain.png";
+            }
+
+     
+      
+      
+    
+            weather.style.display = "block";
+
+       
+                
+                   }
+                }
+                
+              ft();
+              
+              
+            }
+            const failureCallback = error =>{
+                console.log("hey there")
+                alert("something wrong with the error!")
+            }
+
+            navigator.geolocation.getCurrentPosition(successCallback,failureCallback);
+        })
+        
+       
+
+     searchButton.addEventListener("click",() =>{
+        
+        const inputValue = document.querySelector("input").value;
+         async function checkWeather(cityname){
+        const response = await fetch(api_url+ `q=${cityname}` + `&appid=${api_key}`);
+        if(response.status == 404){
+            document.querySelector(".error").style.display = "block"
+           weather.style.display = "none";
+        }else{
+            document.querySelector(".error").style.display = "none";
+            const data = await  response.json();
+        console.log(data)
+        temp.innerHTML = Math.round(data.main.temp - 273.15) + "°C"
+        
+        cityname.innerHTML = data.name;
+        console.log("gone through cityname")
+        humidity.innerHTML = data.main.humidity + "%";
+        wind.innerHTML = data.wind.speed + " Km/h";
+
+        if(data.weather[0].main == "Clouds"){
+        weather_icon.src = "/images/clouds.png"
+       }else if(data.weather[0].main == "Clear"){
+        weather_icon.src = "/images/clear.png";
+       }else if(data.weather[0].main == "Drizzle"){
+        weather_icon.src = "/images/drizzle.png";
+       }else if(data.weather[0].main == "Snow"){
+          weather_icon.src = "/images/snow.png";
+       }
+       else if(data.weather[0].main == "Mist"){
+        weather_icon.src = "/images/mist.png";
+       }
+       else if(data.weather[0].main == "Rain"){
+        weather_icon.src = "/images/rain.png";
+       }
+
+
+      
+      
+    
+       weather.style.display = "block";
+       
+
+       
+        }
+
+     }
+     checkWeather(inputValue);
+    //  function to set history;
+    //  function setHistory(input){
+        
+    //     localStorage.setItem(`search`,input);
+        
+    //  }
+    //  setHistory(inputValue);
+
+        })
+
+        
+
     </script>
+   
 </body>
 </html>

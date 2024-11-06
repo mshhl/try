@@ -6,6 +6,7 @@
 }
 body{
     background: #222;
+    text-align: center;
 }
 .card{
     width: 90%;
@@ -33,9 +34,10 @@ body{
     flex: 1;
     margin-right: 16px;
     font-size: 18px;
+    color: grey;
 
 }
-.search button{
+.search .search-btn{
     border: 0;
     outline: 0;
     border-radius: 50%;
@@ -46,7 +48,7 @@ body{
 
 
 }
-.search button img{
+.search .search-btn img{
     width: 16px;
 }
 .weather-icon{
@@ -93,5 +95,34 @@ body{
  margin-left: 10px;
  display: none;
 }
+.mylocationbtn{
+    width: 60%;
+    max-width: 470px;
+    height: 40px;
+    border: 0;
+    outline: 0;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding: 10px 25px;
+    background-color: lightgreen;
+    
+}
+#map{
+    height: 350px; 
+    width: 450px;
+    text-align: center;
+    margin: 10px auto;
+  }
+  .historybtn{
+    width: 60%;
+    max-width: 470px;
+    height: 40px;
+    border: 0;
+    outline: 0;
+    border-radius: 20px;
+    margin-top: 10px;
+    padding: 10px 25px;
+    background-color: lightgreen;
+  }
 
 
