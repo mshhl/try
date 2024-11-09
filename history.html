@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<head>`
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>history</title>
@@ -8,12 +8,17 @@
 <body>
     <h1>search history</h1>
     <h3>Recent search</h3>
-    <p class="search1"></p>
+    <p class="search"></p>
     <script>
         const historybtn = document.querySelector(".historybtn");
+        let histo = document.querySelector(".search")
         function getHistory(){
-            localStorage.getItem("search1");
+            return  localStorage.getItem("search");
         }
+        const value = getHistory();
+        histo.innerHTML = value;
+        
+
     </script>
 </body>
 </html>

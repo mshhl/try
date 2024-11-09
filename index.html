@@ -22,7 +22,7 @@
         <div class="weather">
             <img src="/images/clouds.png" class="weather-icon" >
             <h1 class="temp">21°C</h1>
-            <h2 class="cityname">Perinthalmanna</h2>
+            <h2 class="cityname"></h2>
             <div class="details">
                 <div class="col">
                     <img src="/images/humidity.png" >
@@ -46,21 +46,24 @@
     </div>
     <br><br>
     <div id="map"></div>
-    <button class="historybtn">SEE SEARCH  HISTORY</button>
+    <button class="historybtn" >SEE SEARCH  HISTORY</button>
        
     </div>
-    <button class="mylocationbtn">GET MY WEATHER</button>
     <script>
         const searchButton = document.querySelector(".search-btn");
-        const locationBtn = document.querySelector(".mylocationbtn");
         const api_key = "8c7ab22aabf67ccdd10697ca28f4d376";
         const api_url = `https://api.openweathermap.org/data/2.5/weather?`;
         const weather_icon = document.querySelector(".weather-icon")
         const temp = document.querySelector(".temp");
-        const cityname = document.querySelector(".cityname");
+        const citynameEl = document.querySelector(".cityname");
         const humidity = document.querySelector(".humidity .measure");
         const wind = document.querySelector(".wind .measure");
         const weather = document.querySelector(".weather");
+        const historybtn = document.querySelector(".historybtn");
+
+        historybtn.addEventListener("click",function(){
+            window.location.href = "history.html"
+        })
         
 
         //  map implementation
@@ -69,7 +72,7 @@
       
 
 
-
+     
     //  implementing map 
     var map = L.map('map');
         map.setView([10.850516, 76.271080], 13);
@@ -91,7 +94,7 @@
                 document.querySelector(".error").style.display = "none";
         
                 temp.innerHTML = Math.round(data.main.temp - 273.15) + "°C"
-             cityname.innerHTML = data.name;
+                citynameEl.innerHTML = data.name;
              humidity.innerHTML = data.main.humidity + "%";
              wind.innerHTML = data.wind.speed + " Km/h";
 
@@ -130,7 +133,7 @@
 
         // implement the geolocation feature
         
-        locationBtn.addEventListener("click",async () =>{
+        window.addEventListener("load",async () =>{
             const successCallback = position =>{
                 console.log(position)
               const lat = position.coords.latitude;
@@ -145,7 +148,8 @@
                 document.querySelector(".error").style.display = "none";
         
                 temp.innerHTML = Math.round(data.main.temp - 273.15) + "°C"
-             cityname.innerHTML = data.name;
+                citynameEl.innerHTML = data.name;
+             
              humidity.innerHTML = data.main.humidity + "%";
              wind.innerHTML = data.wind.speed + " Km/h";
 
@@ -201,10 +205,12 @@
         }else{
             document.querySelector(".error").style.display = "none";
             const data = await  response.json();
-        console.log(data)
+        console.log(data.name)
         temp.innerHTML = Math.round(data.main.temp - 273.15) + "°C"
         
-        cityname.innerHTML = data.name;
+        
+        citynameEl.innerHTML = data.name;
+
         console.log("gone through cityname")
         humidity.innerHTML = data.main.humidity + "%";
         wind.innerHTML = data.wind.speed + " Km/h";
@@ -238,12 +244,12 @@
      }
      checkWeather(inputValue);
     //  function to set history;
-    //  function setHistory(input){
+     function setHistory(input){
         
-    //     localStorage.setItem(`search`,input);
+        localStorage.setItem(`search`,input);
         
-    //  }
-    //  setHistory(inputValue);
+     }
+     setHistory(inputValue);
 
         })
 
