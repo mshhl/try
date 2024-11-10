@@ -136,6 +136,7 @@
         window.addEventListener("load",async () =>{
 
 
+
             const successCallback = position =>{
                 console.log(position)
               const lat = position.coords.latitude;
@@ -198,13 +199,14 @@
 
      searchButton.addEventListener("click",() =>{
         
-        const inputValue = document.querySelector("input").value;
+        let inputValue = document.querySelector("input").value;
          async function checkWeather(cityname){
         const response = await fetch(api_url+ `q=${cityname}` + `&appid=${api_key}`);
         if(response.status == 404){
             document.querySelector(".error").style.display = "block"
            weather.style.display = "none";
         }else{
+            toStore(inputValue)
             document.querySelector(".error").style.display = "none";
             const data = await  response.json();
         console.log(data.name)
@@ -239,12 +241,14 @@
     
        weather.style.display = "block";
        
-
        
+
+        
         }
 
      }
      checkWeather(inputValue);
+    
     //  function to set history;
      
      function toStore(e){
@@ -261,7 +265,7 @@
           console.log("array created and pushed!")
         }
      }
-     toStore(inputValue);
+     ;
 
         })
 

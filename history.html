@@ -8,45 +8,29 @@
 </head>
 <body>
     <div class="container">
-        <div class="search">
-            <input type="text" placeholder="Search using history name">
-            <button><img src="/images/search.png"></button>
-        </div>
        
-        <table class="table" border="3" width = "600" height = "600" align="center" >
-            <tr>
-                <th colspan="2">Search history</th>
-            </tr>
-            <tr>
-                <td id="s1">Mishhal</td>
-            </tr>
-            <tr>
-                <td id="s2">Nihal</td>
-            </tr>
-            <tr>
-                <td id="s3">arun</td>
-            </tr>
-            <tr>
-                <td id="s4">Jibin</td>
-            </tr>
-            <tr>
-                <td id="s5">ziyad</td>
-            </tr>
-            <tr>
-                <td id="s6">shihab</td>
-            </tr>
-            <tr>
-                <td id="s7">clear</td>
-            </tr>
+       
+        <table class="table" border="3" width = "600" height = "600" align="center" style="color: white;" >
+           
         </table>
     </div>
     <script>
-        const historybtn = document.querySelector(".historybtn");
-        let histo = document.querySelector(".search")
-        function getHistory(){
-            return  localStorage.getItem("search");
-        }
-        const value = getHistory();
+        const table = document.querySelector(".table");
+       
+        window.addEventListener("load",() =>{
+            const localArray = localStorage.getItem("array");
+            if(!localArray){
+                return table.innerHTML = "<tr><td>you haven't searched anything yet</td></tr>"
+            }
+            const parseArray = JSON.parse(localArray);
+            table.innerHTML = `<tr><th>Search history</th></tr>`
+            for(let i = parseArray.length-1;i>=0;i--){
+                console.log(parseArray[i])
+                table.innerHTML += `
+                <tr><td>${parseArray[i]}</td></tr>`
+            }
+            
+        })
         
         
 
