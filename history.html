@@ -13,10 +13,11 @@
         <table class="table" border="3" width = "600" height = "600" align="center" style="color: white;" >
            
         </table>
+        <button class="clrbtn">Clear history</button>
     </div>
     <script>
         const table = document.querySelector(".table");
-       
+       const clrBtn = document.querySelector(".clrbtn");
         window.addEventListener("load",() =>{
             const localArray = localStorage.getItem("array");
             if(!localArray){
@@ -30,6 +31,10 @@
                 <tr><td>${parseArray[i]}</td></tr>`
             }
             
+        })
+        clrBtn.addEventListener("click",() =>{
+            localStorage.removeItem("array");
+            location.reload(true)
         })
         
         
