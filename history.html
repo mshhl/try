@@ -4,11 +4,42 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>history</title>
+    <link rel="stylesheet" href="/history.css">
 </head>
 <body>
-    <h1>search history</h1>
-    <h3>Recent search</h3>
-    <p class="search"></p>
+    <div class="container">
+        <div class="search">
+            <input type="text" placeholder="Search using history name">
+            <button><img src="/images/search.png"></button>
+        </div>
+       
+        <table class="table" border="3" width = "600" height = "600" align="center" >
+            <tr>
+                <th colspan="2">Search history</th>
+            </tr>
+            <tr>
+                <td id="s1">Mishhal</td>
+            </tr>
+            <tr>
+                <td id="s2">Nihal</td>
+            </tr>
+            <tr>
+                <td id="s3">arun</td>
+            </tr>
+            <tr>
+                <td id="s4">Jibin</td>
+            </tr>
+            <tr>
+                <td id="s5">ziyad</td>
+            </tr>
+            <tr>
+                <td id="s6">shihab</td>
+            </tr>
+            <tr>
+                <td id="s7">clear</td>
+            </tr>
+        </table>
+    </div>
     <script>
         const historybtn = document.querySelector(".historybtn");
         let histo = document.querySelector(".search")
@@ -16,7 +47,7 @@
             return  localStorage.getItem("search");
         }
         const value = getHistory();
-        histo.innerHTML = value;
+        
         
 
     </script>

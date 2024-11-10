@@ -134,6 +134,8 @@
         // implement the geolocation feature
         
         window.addEventListener("load",async () =>{
+
+
             const successCallback = position =>{
                 console.log(position)
               const lat = position.coords.latitude;
@@ -244,12 +246,22 @@
      }
      checkWeather(inputValue);
     //  function to set history;
-     function setHistory(input){
-        
-        localStorage.setItem(`search`,input);
-        
+     
+     function toStore(e){
+        const array = localStorage.getItem("array");
+        if(array){
+           const narray = JSON.parse(array);
+           narray.push(e);
+           localStorage.setItem("array",JSON.stringify(narray));
+           console.log("array edited")
+        }else{
+          const array = [];
+          array.push(e);
+          localStorage.setItem("array",JSON.stringify(array));
+          console.log("array created and pushed!")
+        }
      }
-     setHistory(inputValue);
+     toStore(inputValue);
 
         })
 
