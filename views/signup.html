@@ -12,20 +12,78 @@
             <h2>Sign Up</h2>
             <p>Register To Start</p>
         </div>
+        
         <div class="fill">
             <label for="fullname">FullName:</label>
-            <input type="text" placeholder="Enter your fullname">
+            <input class="inpFullName"  type="text" placeholder="Enter your fullname">
         </div>
+        <div class="errorFullName"></div>
+        
         <div class="fill">
             <label for="email">Email:</label>
-            <input type="email" placeholder="Enter your Email">
+            <input class="inputemail" type="email" placeholder="Enter your Email">
         </div>
+        <div class="errorEmail"></div>
         <div class="fill">
             <label for="password">Password:</label>
-            <input type="password" placeholder="Enter your password">
+            <input class="inputpassword" type="password" placeholder="Enter your password">
         </div>
+        <div class="errorPassword"></div>
         <button class="signup-btn">Sign Up</button>
+        
 
     </div>
+    <script>
+        const inpFullName = document.querySelector(".inpFullName");
+        const inpEmail = document.querySelector(".inputemail");
+        const inpPassword = document.querySelector(".inputpassword");
+        const inputArea = document.querySelectorAll(".fill");
+      
+        const errorMessageName = document.querySelector(".errorFullName");
+        const errorMessageEmail = document.querySelector(".errorEmail");
+        const errorMessagePassword = document.querySelector(".errorPassword")
+
+        function validateEmail(email){
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
+            return regex.test(email);
+        }
+        
+        
+        
+      
+        const [fill1,fill2,fill3] = inputArea;
+        fill1.addEventListener("mouseleave",() =>{
+            errorMessageName.style.display = "block";
+            const fullNameValue = inpFullName.value;
+            if(fullNameValue == "" || !fullNameValue.length >= 4){
+                fill1.style.borderColor = "red";
+                
+                errorMessageName.innerHTML = "cannot be identified as human name";
+            }else{
+                errorMessageName.style.display = "none";
+            }
+        })
+        fill2.addEventListener("mouseleave",() =>{
+            errorMessageEmail.style.display = "block";
+            const EmailValue = inpEmail.value;
+            if( EmailValue == "" || !validateEmail(EmailValue) ){
+                errorMessageEmail.innerHTML = "Email is not verified"
+            }else{
+                errorMessageEmail.style.display = "none";
+            }
+        })
+        fill3.addEventListener("mouseleave",() =>{
+            errorMessagePassword.style.display = "block";
+            const passwordValue = inpPassword.value;
+            if(passwordValue == "" || passwordValue.length <=4){
+                errorMessagePassword.innerHTML = "Enter verified password";
+            }else{
+                errorMessagePassword.style.display = "none";
+            }
+
+        })
+
+        
+    </script>
 </body>
 </html>
