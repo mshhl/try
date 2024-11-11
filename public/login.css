@@ -61,3 +61,7 @@ body{
 .signup-btn:hover{
     background-color: grey;
 }
+.go-to-signup-btn{
+    margin-top: 20px;
+    text-align: center;
+}
