@@ -14,14 +14,76 @@
         </div>
         <div class="fill">
             <label for="email">Email:</label>
-            <input type="email" placeholder="Enter your Email">
+            <input class="emailInput" type="email" placeholder="Enter your Email">
         </div>
+        <div class="errorEmail"></div>
         <div class="fill">
             <label for="password">Password:</label>
-            <input type="password" placeholder="Enter your password">
+            <input class="passwordInput" type="password" placeholder="Enter your password">
         </div>
-        <button class="signup-btn">Sign Up</button>
+        <div class="errorPassword"></div>
+        <button class="login-btn">Login</button>
         <p class="go-to-signup-btn">Didn't register ? <a href="./signup.html">Sign up now</a></p>
     </div>
+    <script>
+        const fillArea = document.querySelectorAll(".fill");
+        const [fill1,fill2] = fillArea;
+        // validation 
+        // ***********
+        const emailInput = document.querySelector(".emailInput");
+        const passwordInput = document.querySelector(".passwordInput");
+        const errorEmail = document.querySelector(".errorEmail");
+        const errorPassword = document.querySelector(".errorPassword");
+        const loginBtn = document.querySelector(".login-btn");
+
+        function validateEmail(email){
+            const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
+            return regex.test(email);
+        }
+
+        fill1.addEventListener("mouseleave",() =>{
+           const emailValue = emailInput.value;
+           
+           if(emailValue == "" || !validateEmail(emailValue)){
+            errorEmail.style.display = "block";
+            errorEmail.innerHTML = "Incorrect email";
+           }else{
+            errorEmail.style.display = "none";
+
+           }
+        })
+        fill2.addEventListener("mouseleave",() =>{
+            const passwordValue = passwordInput.value;
+            if(passwordValue == "" || passwordValue.length <=4){
+                errorPassword.style.display = "block";
+                errorPassword.innerHTML = "Password is not valid";
+            }else{
+                errorPassword.style.display = "none";
+            }
+        })
+        // signup button
+        loginBtn.addEventListener("click",() =>{
+            if(emailInput.value == "" || !validateEmail(emailInput.value)){
+                errorEmail.style.display = "block";
+                errorEmail.innerHTML = "Enter email before submit";
+            }else if(passwordInput.value == "" || passwordInput.value.length <=4){
+                errorEmail.style.display = "none";
+                errorPassword.style.display = "block";
+                errorPassword.innerHTML = "Enter password before submit";
+            }else{
+                const usersArray = localStorage.getItem("users");
+                const usersParse = JSON.parse(usersArray);
+                for(let i = 0;i<usersParse.length;i++){
+                    if(emailInput.value == usersParse[i].email && passwordInput.value == usersParse[i].password){
+                        location.href = "./index.html";
+                        return;
+                    }
+                }
+                errorEmail.style.display = "block";
+                errorEmail.innerHTML = "User doesn't exist signup Please";
+            }
+        })
+        
+    </script>
 </body>
 </html>

@@ -9,7 +9,7 @@ body{
 .container{
     width: 90%;
     max-width: 400px;
-    height: 350px;
+    height: 380px;
     background-color: white;
     color: black;
     margin: 100px auto;
@@ -49,7 +49,7 @@ body{
     border-radius: 15px;
     color: black;
 }
-.signup-btn{
+.login-btn{
     width: 350px;
     height: 35px;
     border-radius: 15px;
@@ -57,11 +57,16 @@ body{
     font-size: 18px;
     font-weight: 500;
     cursor: pointer;
+    margin-top: 10px;
 }
-.signup-btn:hover{
+.login-btn:hover{
     background-color: grey;
 }
 .go-to-signup-btn{
     margin-top: 20px;
     text-align: center;
+}
+.errorEmail,.errorPassword{
+    color: red;
+    margin-top: -16px;
 }
