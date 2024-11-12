@@ -101,20 +101,23 @@
                             errorMessageName.innerHTML = "user already exist";
                             return ;
 
-                        }else{
-                            const array = [];
+                        }
+                    }     
                        const object = {
                             name:fullName,
                             email:email,
                             password:password
                         }
+                        userParse.push(object);
                 
-                        array.push(object);
-                        const strArray = JSON.stringify(array);
+                        
+                        const strArray = JSON.stringify(userParse);
                         localStorage.setItem("users",strArray);
+                        console.log("user registered successfully");
+                        location.href = "./login.html";
 
-                      }
-                    }
+                      
+                    
                 }else{
                     const array = [];
                 const object = {
