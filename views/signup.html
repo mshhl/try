@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Sign Up</title>
     <link rel="stylesheet" href="/public/signup.css">
 </head>
 <body>
@@ -114,7 +114,14 @@
                         const strArray = JSON.stringify(userParse);
                         localStorage.setItem("users",strArray);
                         console.log("user registered successfully");
-                        location.href = "./login.html";
+                        // session storage implementation;
+                        
+                        
+
+
+                        // function for add hours
+                        
+
 
                       
                     
@@ -129,6 +136,8 @@
                 array.push(object);
                 const strArray = JSON.stringify(array);
                 localStorage.setItem("users",strArray);
+                location.href = "./login.html"
+                
                 }
 
                 

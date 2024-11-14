@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Login</title>
     <link rel="stylesheet" href="/public/login.css">
 </head>
 <body>
@@ -40,6 +40,16 @@
             const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/g;
             return regex.test(email);
         }
+        window.addEventListener("load",() =>{
+            const expiresTime = new Date(sessionStorage.getItem("AuthenticationExpires"));
+            if(sessionStorage.getItem("AuthenticationState") || sessionStorage.getItem("AuthenticationState") == "Authenticated" && 
+             expiresTime ){
+                        console.log("Hey there")
+                         location.href = "./index.html";
+                         return;
+        }
+        
+    })
 
         fill1.addEventListener("mouseleave",() =>{
            const emailValue = emailInput.value;
@@ -72,17 +82,28 @@
                 errorPassword.innerHTML = "Enter password before submit";
             }else{
                 const usersArray = localStorage.getItem("users");
+                if(!usersArray){
+                    errorEmail.style.display = "block";
+                    errorEmail.innerHTML = "user not exist";
+                    
+ 
+                }
                 const usersParse = JSON.parse(usersArray);
                 for(let i = 0;i<usersParse.length;i++){
                     if(emailInput.value == usersParse[i].email && passwordInput.value == usersParse[i].password){
+                        sessionStorage.setItem("AuthenticationState","Authenticated");
+                        sessionStorage.setItem("AuthenticationExpires",Date.now() + 5 * 60 * 1000);
                         location.href = "./index.html";
                         return;
+
+                       }
+                        
                     }
                 }
                 errorEmail.style.display = "block";
                 errorEmail.innerHTML = "User doesn't exist signup Please";
             }
-        })
+        )
         
     </script>
 </body>
